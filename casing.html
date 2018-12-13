@@ -32,7 +32,7 @@
     <nav id="sidebar-wrapper">
       <ul class="sidebar-nav">
         <li class="sidebar-brand">
-          <a class="js-scroll-trigger" href="#page-top">Start Bootstrap</a>
+          <a class="js-scroll-trigger" href="#page-top">Creating an adequate camera mount and selecting hardware</a>
         </li>
         <li class="sidebar-nav-item">
           <a class="js-scroll-trigger" href="#page-top">Home</a>
@@ -40,12 +40,14 @@
         <li class="sidebar-nav-item">
           <a class="js-scroll-trigger" href="#about">About</a>
         </li>
+
+        <!--
         <li class="sidebar-nav-item">
           <a class="js-scroll-trigger" href="#services">Services</a>
-        </li>
+      </li>
         <li class="sidebar-nav-item">
           <a class="js-scroll-trigger" href="#portfolio">Portfolio</a>
-        </li>
+      </li> -->
         <li class="sidebar-nav-item">
           <a class="js-scroll-trigger" href="#contact">Contact</a>
         </li>
@@ -55,9 +57,9 @@
     <!-- Header -->
     <header class="masthead d-flex">
       <div class="container text-center my-auto">
-        <h1 class="mb-1">Search and Tag Robot</h1>
+        <h1 class="mb-1">Creating an adequate camera mount and selecting hardware</h1>
         <h3 class="mb-5">
-          <em>An ECE 4180 Final Design Project</em>
+          <em>Let's get physical</em>
         </h3>
         <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Find Out More</a>
       </div>
@@ -69,16 +71,64 @@
       <div class="container text-center">
         <div class="row">
           <div class="col-lg-10 mx-auto">
-            <h2>General Overview</h2>
-            <p class="lead mb-5">This theme features a flexible, UX friendly sidebar menu and stock photos from our friends at
-              <a href="https://unsplash.com/">Unsplash</a>!</p>
+            <h2>How did we select our camera mount?</h2>
+            <p class="lead mb-5">Honestly we knew we would need a camera mount once we attached our
+                        Raspberry Pi V2 camera to the RPi 3. It was not a rigid connection due to how
+                        flimsy the cord was. We also wanted to mount it on a servo so it could be actuated
+                        independently of the pose of the robot, so only turning in degrees that do not
+                        over-exted the cord to the point of tear.  Therefore the mount needed to be small enough
+                        to mount it on the servo without loss of rotation, but strong enough to maintain enough rigidity
+                        to hold the camera where we want it to be angled.</p>
+
+            <h2>How did we store our RPi?</h2>
+            <p class="lead mb-5"> When using both the RPi and the mbed then you can not let the pieces touch because
+                        they would surely short out and cause the whole circuit to be fried. We ended up purchasing a
+                        small RPi case that came with predesigned holes to enable connections, but also contained holes
+                        to let heat escape. Originally we thought to mount the entire RPi case on top of the servo, but
+                        it was not actuating as fast as possible and it wasn't balanced well on the small servo head. We
+                        instead defaulted to just mounting the monster head which doubles as our camera mount on the servo
+                        and attaching the remainder of the case onto the top of the robot. The RPi case is shown below.</p>
+
+                        <img class="img-fluid" src="img/raspberryPiCase.jpg" alt="">
+
+            <p class="lead mb-5"> Below you can find the pin out diagram of all of our relevant componets for the project.</p>
+
+                <img class="img-fluid" src="img/Search&Tag Pinout Diagram (5).png" alt="">
+            <!--
+                <body>
+                    <pre class='brush: cpp'>
+                        // my first program in C++
+                        #include <iostream>
+                            using namespace std;
+
+                        int main ()
+                        {
+                            cout << "Hello World!";
+                            return 0;
+                        }
+                    </pre>
+
+                <script src="js/shCore.js"></script>
+                <script src="js/shBrushCpp.js"></script>
+                <script>
+                SyntaxHighlighter.all()
+                </script>
+                </body>
+            -->
+
+                <p class="lead mb-5"> Originally we wanted to use Open CV to tag and follow objects throughout
+                    the room based on filtering them via the color masking option, however, installing OpenCV on the
+                    RPi 3 disabled the functionality of the camera, which defeated the main purpose as to why we wanted
+                    it on there in the first place. So we pivoted and used the Google Cloud Vision Api here<link href="https://cloud.google.com/vision/?utm_source=google&utm_medium=cpc&utm_campaign=na-US-all-en-dr-bkws-all-all-trial-p-dr-1003905&utm_content=text-ad-none-any-DEV_c-CRE_291204483507-ADGP_Hybrid+%7C+AW+SEM+%7C+BKWS+%7C+US+%7C+en+%7C+PHR+~+ML/AI+~+Vision+API+~+Google+Cloud+Vision-KWID_43700036550340455-kwd-475191344780&utm_term=KW_google%20cloud%20vision-ST_Google+Cloud+Vision&gclid=CjwKCAiAo8jgBRAVEiwAJUXKqPCOArJN0UUH0pB52Y-fzFOQCXHlTzO-A2H5ZlqKCh0NGbG5I2Dy9xoCVCkQAvD_BwE"> instead. We used it's capability to label items in the image that it processes.
+                    Thankfully you receive a free trial and you are able to manipulate some of the tutorials they have.
+                    After doing some research we found a label tutorial that sent a label request to the console and would dump back the  </p>
             <a class="btn btn-dark btn-xl js-scroll-trigger" href="#services">What We Offer</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Services -->
+    <!-- Services
     <section class="content-section bg-primary text-white text-center" id="services">
       <div class="container">
         <div class="content-section-heading">
@@ -128,7 +178,8 @@
       </div>
     </section>
 
-    <!-- Callout -->
+-->
+    <!-- Callout
     <section class="callout">
       <div class="container text-center">
         <h2 class="mx-auto mb-5">Welcome to
@@ -138,7 +189,8 @@
       </div>
     </section>
 
-    <!-- Portfolio -->
+-->
+    <!-- Portfolio
     <section class="content-section" id="portfolio">
       <div class="container">
         <div class="content-section-heading text-center">
@@ -194,7 +246,8 @@
       </div>
     </section>
 
-    <!-- Call to Action -->
+-->
+    <!-- Call to Action
     <section class="content-section bg-primary text-white">
       <div class="container text-center">
         <h2 class="mb-4">The buttons below are impossible to resist...</h2>
@@ -203,6 +256,7 @@
       </div>
     </section>
 
+-->
     <!-- Map
 
     <section id="contact" class="map">

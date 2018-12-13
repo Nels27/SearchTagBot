@@ -40,12 +40,14 @@
         <li class="sidebar-nav-item">
           <a class="js-scroll-trigger" href="#about">About</a>
         </li>
+
+        <!--
         <li class="sidebar-nav-item">
           <a class="js-scroll-trigger" href="#services">Services</a>
-        </li>
+      </li>
         <li class="sidebar-nav-item">
           <a class="js-scroll-trigger" href="#portfolio">Portfolio</a>
-        </li>
+      </li> -->
         <li class="sidebar-nav-item">
           <a class="js-scroll-trigger" href="#contact">Contact</a>
         </li>
@@ -70,7 +72,59 @@
         <div class="row">
           <div class="col-lg-10 mx-auto">
             <h2>How did we get cross platform communication</h2>
-            <p class="lead mb-5">When working on this design problem we realized a few things. Since we are trying to incorporate both a raspberry pi and a </p>
+            <p class="lead mb-5">When working on this design problem we realized a few things.
+                Since we are trying to incorporate both a raspberry pi and an mbed we would be
+                dealing with two different programming languages. Essentially you would be running
+                C++ on the mbed, but you would be running python on the Raspberry Pi. We chose the
+                Raspberry Pi 3 (RPi 3) in order to give us the capability of analyzing pictures from the robot's
+                point of view.</p>
+
+            <p class="lead mb-5"> We would be doing all of the motor actuation from the mbed side and all of the
+                visual processing from the RPi Camera on the RPi side. Therefore we had to write a code that wrote to
+                the mbed from the RPi using a serial connection. As a result we had to install pySerial<link href="">
+                (link can be found here) on our RPi and leverage their libraries. Learning from lab 4 where we had to
+                do a serial loopback between the RPi and the mbed we had to initialize the serial port of the mbed from
+                the RPi side using "/dev/ttyACM0". Once this was initalized we could read and write to the mbed with the
+                required methods.</p>
+
+                <img class="img-fluid" src="img/BT 4180_FlowChart.png" alt="">
+            <!--
+                <body>
+                    <pre class='brush: cpp'>
+                        // my first program in C++
+                        #include <iostream>
+                            using namespace std;
+
+                        int main ()
+                        {
+                            cout << "Hello World!";
+                            return 0;
+                        }
+                    </pre>
+
+                <script src="js/shCore.js"></script>
+                <script src="js/shBrushCpp.js"></script>
+                <script>
+                SyntaxHighlighter.all()
+                </script>
+                </body>
+            -->
+
+                <p class="lead mb-5"> Originally we wanted to use Open CV to tag and follow objects throughout
+                    the room based on filtering them via the color masking option, however, installing OpenCV on the
+                    RPi 3 disabled the functionality of the camera, which defeated the main purpose as to why we wanted
+                    it on there in the first place. So we pivoted and used the Google Cloud Vision Api here<link href="https://cloud.google.com/vision/?utm_source=google&utm_medium=cpc&utm_campaign=na-US-all-en-dr-bkws-all-all-trial-p-dr-1003905&utm_content=text-ad-none-any-DEV_c-CRE_291204483507-ADGP_Hybrid+%7C+AW+SEM+%7C+BKWS+%7C+US+%7C+en+%7C+PHR+~+ML/AI+~+Vision+API+~+Google+Cloud+Vision-KWID_43700036550340455-kwd-475191344780&utm_term=KW_google%20cloud%20vision-ST_Google+Cloud+Vision&gclid=CjwKCAiAo8jgBRAVEiwAJUXKqPCOArJN0UUH0pB52Y-fzFOQCXHlTzO-A2H5ZlqKCh0NGbG5I2Dy9xoCVCkQAvD_BwE"> instead. We used it's capability to label items in the image that it processes.
+                    Thankfully you receive a free trial and you are able to manipulate some of the tutorials they have.
+                    After doing some research we found a label tutorial that sent a label request to the console and would dump back the responses.
+                    There is an example of that happening below.</p>
+
+                    <img class="img-fluid" src="img/sampleJsonResponse.png" alt="">
+
+
+                    <p class="lead mb-5">After adding the necessary adjustments to the label requester it was able to parse for the particular
+                        keywords. Then it returned only if a threat was found based off of those keywords or if there was no threat at all.
+                        This was edited so it could run on a continuous basis once it was initialized the first time. Therefore it is waiting for an input
+                        caused by the user from the bluetooth app.</p>
             <a class="btn btn-dark btn-xl js-scroll-trigger" href="#services">What We Offer</a>
           </div>
         </div>
