@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Stylish Portfolio - Start Bootstrap Template</title>
+    <title>SearchAndTagBot</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -32,20 +32,34 @@
     <nav id="sidebar-wrapper">
       <ul class="sidebar-nav">
         <li class="sidebar-brand">
-          <a class="js-scroll-trigger" href="#page-top">Start Bootstrap</a>
+          <a class="js-scroll-trigger" href="#page-top">Software Makeup</a>
         </li>
         <li class="sidebar-nav-item">
-          <a class="js-scroll-trigger" href="#page-top">Home</a>
+          <a class="js-scroll-trigger" href="https://searchandtagbot.github.io/Website/">Home Page</a>
         </li>
         <li class="sidebar-nav-item">
-          <a class="js-scroll-trigger" href="#about">About</a>
+          <a class="js-scroll-trigger" href="#about">About this aspect</a>
         </li>
+        <li class="sidebar-nav-item">
+          <a class="js-scroll-trigger" href="https://searchandtagbot.github.io/Website/casing.html">Hardware Makeup</a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a class="js-scroll-trigger" href="https://searchandtagbot.github.io/Website/power.html">Power</a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a class="js-scroll-trigger" href="https://searchandtagbot.github.io/Website/comm.html">Software Makeup</a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a class="js-scroll-trigger" href="https://searchandtagbot.github.io/Website/troubleshoot.html">Troubleshooting</a>
+        </li>
+
+        <!--
         <li class="sidebar-nav-item">
           <a class="js-scroll-trigger" href="#services">Services</a>
-        </li>
+      </li>
         <li class="sidebar-nav-item">
           <a class="js-scroll-trigger" href="#portfolio">Portfolio</a>
-        </li>
+      </li> -->
         <li class="sidebar-nav-item">
           <a class="js-scroll-trigger" href="#contact">Contact</a>
         </li>
@@ -55,9 +69,9 @@
     <!-- Header -->
     <header class="masthead d-flex">
       <div class="container text-center my-auto">
-        <h1 class="mb-1">Search and Tag Robot</h1>
+        <h1 class="mb-1">Mapping and Tagging our Environment</h1>
         <h3 class="mb-5">
-          <em>An ECE 4180 Final Design Project</em>
+          <em>Exploring and surveying an environment using a teleoperated approachs</em>
         </h3>
         <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Find Out More</a>
       </div>
@@ -69,16 +83,92 @@
       <div class="container text-center">
         <div class="row">
           <div class="col-lg-10 mx-auto">
-            <h2>General Overview</h2>
-            <p class="lead mb-5">This theme features a flexible, UX friendly sidebar menu and stock photos from our friends at
-              <a href="https://unsplash.com/">Unsplash</a>!</p>
+            <h2>How did we come up with the idea?</h2>
+            <p class="lead mb-5">When initially thinking about the project we wanted to give
+                it a uniqueness that gave it functionality. So we thought why not have it map and
+                tag our environment based on the path it has traveled and what it has encountered
+                along the way. There were some pre-existing models, but they weren't too helpful
+                in our implementation. It was decided to leverage the SD File System to store our
+                information for mapping our path. Essentially as the robot moves through the
+                environment it keeps track of the heading and the amount of time it spent moving
+                forwards and turning. Each of these are multiplied by a speed ratio determined by
+                averaging the times for a series of trials for driving forward and turning 180 degrees
+                in each direction. </p>
+
+            <p class="lead mb-5"> Implementation was a little tricky since we took away the encoders.
+                These in fact were more trouble than originally anticipated since they did not help
+                with straightening the motion of the wheels. Each time a movement occurs a timer is
+                started on the immeadiate button press, and then it is stop on the button release.
+                This time is then stored and multiplied by the movement rates determined by the averages,
+                which is then used to calculate the new heading of the robot.</p>
+
+
+            <h2>How were we able to tag things on the map?</h2>
+            <p class="lead mb-5"> Well we discussed how the objects were labeled in the environment using
+                the google vision api, but there is an additional modification that was made to the code.
+                When communicating from the Raspberry Pi (RPi) to the mbed it awaits an initial indicator
+                character from the mbed that tells the RPi that it ready to engage the tagging. This
+                character is sent once the '4' button has been pressed on the bluetooth GUI. Once the
+                character is received then the label requester continues to analyze the picture taken by
+                the camera and spits back the responses. The targets we used for the project were green
+                army men, thus the responses are then parsed and if any of the keywords (military organization,
+                army men, green, gun, or soldier) are found then it prints to the terminal window that a threat
+                has been found. This sends back a character to the mBed to notify that the object has been tagged
+                and the robot plays "Target Acquired" over the Speaker to provide further confirmation. However,
+                if it is in fact not an army man then it sends back a different character, which prompts the Robot
+                to play "Weeee" over the speaker.</p>
+
+
+            <p class="lead mb-5"> The SD Fie System comes in on the back end as well, along with the heading and
+                time that was written on the SD card it also either gets a m or 1 to demonstrate that an object
+                was tagged in that location. An example image of the text file is included below.</p>
+
+                <p> </p>
+                <img class="img-fluid" src="img/exampleTxtFile.png" alt="">
+                <p> </p>
+
+            <p class="lead mb-5"> This information is processed by the C# GUI code in order to create the plot with
+                the locations of where the robot tried to tag things and where it was successful in tagging. An
+                example of the finished product after the file was processed is shown below. There are many internal
+                functions that catch for when the robot hasn't changed location or when it has and it has tagged
+                something, but these can all be found in our Github repository.</p>
+
+                <p> </p>
+                <img class="img-fluid" src="img/dummy_map.png" alt="">
+                <p> </p>
+
+            <!--
+                <body>
+                    <pre class='brush: cpp'>
+                        // my first program in C++
+                        #include <iostream>
+                            using namespace std;
+
+                        int main ()
+                        {
+                            cout << "Hello World!";
+                            return 0;
+                        }
+                    </pre>
+
+                <script src="js/shCore.js"></script>
+                <script src="js/shBrushCpp.js"></script>
+                <script>
+                SyntaxHighlighter.all()
+                </script>
+                </body>
+            -->
+
+
+                        <!--
             <a class="btn btn-dark btn-xl js-scroll-trigger" href="#services">What We Offer</a>
+        -->
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Services -->
+    <!-- Services
     <section class="content-section bg-primary text-white text-center" id="services">
       <div class="container">
         <div class="content-section-heading">
@@ -128,7 +218,8 @@
       </div>
     </section>
 
-    <!-- Callout -->
+-->
+    <!-- Callout
     <section class="callout">
       <div class="container text-center">
         <h2 class="mx-auto mb-5">Welcome to
@@ -138,7 +229,8 @@
       </div>
     </section>
 
-    <!-- Portfolio -->
+-->
+    <!-- Portfolio
     <section class="content-section" id="portfolio">
       <div class="container">
         <div class="content-section-heading text-center">
@@ -194,7 +286,8 @@
       </div>
     </section>
 
-    <!-- Call to Action -->
+-->
+    <!-- Call to Action
     <section class="content-section bg-primary text-white">
       <div class="container text-center">
         <h2 class="mb-4">The buttons below are impossible to resist...</h2>
@@ -203,6 +296,7 @@
       </div>
     </section>
 
+-->
     <!-- Map
 
     <section id="contact" class="map">
@@ -257,5 +351,3 @@
     <script src="js/stylish-portfolio.min.js"></script>
 
   </body>
-
-</html>
