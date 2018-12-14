@@ -97,50 +97,28 @@
 
 
             <h2>Raspberr Pi / Python Side</h2>
-            <p class="lead mb-5"> There were quite a few issues on the RPi side. The main one being that we were unable to use Open CV on it. Initially we wanted to use OpenCV to track all of
+            <p class="lead mb-5"> There were a few issues on the RPi side. The main one being that we were unable to use Open CV on it. Initially we wanted to use OpenCV to track all of
                 our items in our environment by filtering it's color from the environment via a mask. We learned that installing OpenCV on a RPi has two issues. First one being it takes
                 an extremely long time to do so. Second once it install it disables the initial use of the camera so it defeats the entire purpose of installing it there in the first place.
                 Thus we deferred to using the Google Vision API and it's label request tool to identify features in the environment.</p>
+
+                <p class ="lead mb-5"> Additionally we had the controller issue for the RPi side since we were trying to use bluetooth. The controller would only stay connected for 2 milliseconds
+                    before getting kicked out. So this is why we defaulted to MQTT, which is detailed more later.</p>
 
             <p class="lead mb-5"></p>
 
             <p class="lead mb-5"></p>
 
                 <img class="img-fluid" src="img/BT 4180_FlowChart.png" alt="">
-            <!--
-                <body>
-                    <pre class='brush: cpp'>
-                        // my first program in C++
-                        #include <iostream>
-                            using namespace std;
-
-                        int main ()
-                        {
-                            cout << "Hello World!";
-                            return 0;
-                        }
-                    </pre>
-
-                <script src="js/shCore.js"></script>
-                <script src="js/shBrushCpp.js"></script>
-                <script>
-                SyntaxHighlighter.all()
-                </script>
-                </body>
-            -->
 
 
                     <p></p>
 
-                    <img class="img-fluid" src="img/sampleJsonResponse.png" alt="">
-
                     <p></p>
-                    <img class="img-fluid" src="img/successfulJsonResponse.png" alt="">
                     <p></p>
 
                     <p class="lead mb-5"></p>
 
-                    <img class="img-fluid" src="img/adjustedJsonResponse.JPG" alt="">
 
 
                     <p></p>
@@ -150,7 +128,7 @@
                     more of an intuitive layout for controlling the robot rather than just the bluetooth app. There were a few issues
                     with this. Since the controller was capable of bluetooth it could be easily connected to the Raspberry Pi using the
                     bluetooth capabilities. At first this worked, but once we switched over to Raspbian for Robots it stopped functioning.
-                    The controller had to be connected in a different way so we explored using MQTT <link href="https://www.eclipse.org/paho/clients/python/">, which is a machine to machine IOT connectivitiy
+                    The controller had to be connected in a different way so we explored using<a href="https://www.eclipse.org/paho/clients/python/"> MQTT</a>, which is a machine to machine IOT connectivitiy
                     protocol. This would require us to make one of the devices a client and one of them the broker. Therefore we connected the controller
                     to a personal PC running linux and subscribed to a specific topic for the controller, while connecting to the RPi via IP address over the same
                     wifi network. The communication from PC to RPi for controller outputs was successful, but for some reason writing to the serial port of the mBed
@@ -160,17 +138,31 @@
 
                     <p></p>
                     <p></p>
+
+                    <p class="lead mb-5"> Here is a look at the controller.</p>
+
+                    <img class="img-fluid" src="img/ps4Controller.jpeg" alt="">
+                    
+                    <p></p>
                     <p></p>
                     <p class="lead mb-5"> This would have been the intended control method for the entire setup.</p>
 
-                    <img class="img-fluid" src="img/controllerMqttFlowChart" alt="">
+                    <img class="img-fluid" src="img/controllerMqttFlowChart.png" alt="">
 
                     <p></p>
                     <p></p>
+
 
 
                 <h2>Mapping Issues</h2>
-                <p class="lead mb-5"> The mapping was intended to be real-time with the robot, but the main issue was communicating with the GUI and </p>
+                <p class="lead mb-5"> The mapping was intended to be real-time with the robot, but the main issue was communicating with the GUI and the RPi since the GUI was in C# and the RPi code was in python.
+                    Once we moved away from making it real time we were able to not worry about writing from the RPi to the GUI instantly, but instead logging the correct data and processing it after the fact.</p>
+
+                    <p class="lead mb-5"> Outside of that we were originally planning to use the IMU, however, based on our software organization in the mbed code once we used the IMU.begin() method it locked up
+                        everything in our code. We instead devised a work around by averaging the rate of speed of a forward movement, left turn movement, and right turn movement. We set these a predetermined values,
+                        so that when the timer was used, the value could be multiplied by this rate and the amount of distance traveled could be found. This would then be processed by the GUI. Unfortunately this was not
+                        entirely accurate, so a compounded error even after scaling caused the generated plot to be off. Possible solutions that were recommended were using a new IMU chip that contained its on internal ARM processor
+                        this way that process can be offloaded from the mbed.</p>
                         <!--
             <a class="btn btn-dark btn-xl js-scroll-trigger" href="#services">What We Offer</a>
         -->
