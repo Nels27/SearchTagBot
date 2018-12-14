@@ -83,7 +83,25 @@
       <div class="container text-center">
         <div class="row">
           <div class="col-lg-10 mx-auto">
+
+            <h2>mBed / C++ Side</h2>
+            <p class="lead mb-5"> When trying to communicate from Raspberry Pi to mbed we had been trying to use the controller to write outputs to the mBed
+                from the RPi, since it could connect to it via bluetooth. One issue we realized outright was that it was difficult to send entire strings to the mBed
+                over a serial connection. The serial method for mbed uses a device.getc() method which only takes in one character at a time. Therefore anything longer
+                would get truncated. So the controller would not be able to send "Right Joystick moved right" for example. We decided to dedicate each controller action to one ASCII
+                character since there were over 52 and there were way less controller actions to be mapped.</p>
+
+            <p class="lead mb-5"> Another issue we had was being able to lock in the heading for particular moments when initiating the tagging protocol from the controller.
+                We needed a way to differentiate them from each other and it was decided to use a timer to start and stop on forward and turning movement. This was written to the SD
+                card so that it could be parsed by the C# gui and plot correctly.</p>
+
+
             <h2>Raspberr Pi / Python Side</h2>
+            <p class="lead mb-5"> There were quite a few issues on the RPi side. The main one being that we were unable to use Open CV on it. Initially we wanted to use OpenCV to track all of
+                our items in our environment by filtering it's color from the environment via a mask. We learned that installing OpenCV on a RPi has two issues. First one being it takes
+                an extremely long time to do so. Second once it install it disables the initial use of the camera so it defeats the entire purpose of installing it there in the first place.
+                Thus we deferred to using the Google Vision API and it's label request tool to identify features in the environment.</p>
+
             <p class="lead mb-5"></p>
 
             <p class="lead mb-5"></p>
@@ -110,8 +128,7 @@
                 </script>
                 </body>
             -->
-                <h2>mBed / C++ Side</h2>
-                <p class="lead mb-5"></p>
+
 
                     <p></p>
 
@@ -128,9 +145,32 @@
 
                     <p></p>
                     <p></p>
-                <h2>Main Scheme for controlling the robot</h2>
-                <p class="lead mb-5"></p>
+                <h2>Figuring out how to control the robot</h2>
+                <p class="lead mb-5"> Originally we had decided to use a Dualshock Playstation 4 controller to provide the user
+                    more of an intuitive layout for controlling the robot rather than just the bluetooth app. There were a few issues
+                    with this. Since the controller was capable of bluetooth it could be easily connected to the Raspberry Pi using the
+                    bluetooth capabilities. At first this worked, but once we switched over to Raspbian for Robots it stopped functioning.
+                    The controller had to be connected in a different way so we explored using MQTT <link href="https://www.eclipse.org/paho/clients/python/">, which is a machine to machine IOT connectivitiy
+                    protocol. This would require us to make one of the devices a client and one of them the broker. Therefore we connected the controller
+                    to a personal PC running linux and subscribed to a specific topic for the controller, while connecting to the RPi via IP address over the same
+                    wifi network. The communication from PC to RPi for controller outputs was successful, but for some reason writing to the serial port of the mBed
+                    was not successful. Each controller output was mapped to a particular character, which was processed by the mbed and caused some sort of robot action.
+                    We felt that if we had a little more time we probably would have figured it out. However, in an effort to keep it wireless we switched the control
+                    scheme over to bluetooth with switch case statements.</p>
 
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p class="lead mb-5"> This would have been the intended control method for the entire setup.</p>
+
+                    <img class="img-fluid" src="img/controllerMqttFlowChart" alt="">
+
+                    <p></p>
+                    <p></p>
+
+
+                <h2>Mapping Issues</h2>
+                <p class="lead mb-5"> The mapping was intended to be real-time with the robot, but the main issue was communicating with the GUI and </p>
                         <!--
             <a class="btn btn-dark btn-xl js-scroll-trigger" href="#services">What We Offer</a>
         -->
